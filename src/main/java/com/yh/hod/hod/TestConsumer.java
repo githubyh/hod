@@ -17,8 +17,8 @@ import kafka.javaapi.consumer.ConsumerConnector;
 public class TestConsumer extends Thread{   
     private static final String ZOOKEEPER = "appserver:2181";
         private final ConsumerConnector consumer;   
-//        private static final String GROUP_NAME = "test_group";
-        private static final String TOPIC_NAME = "kafkatesttop";
+        private static final String GROUP_NAME = "test_group";
+        private static final String TOPIC_NAME = "fktest1";
         private final String topic;  
         private   int count = 0 ;
      
@@ -35,14 +35,14 @@ public class TestConsumer extends Thread{
     private static ConsumerConfig createConsumerConfig() {   
         Properties props = new Properties();   
         props.put("zookeeper.connect",ZOOKEEPER);   
-        props.put("group.id", "0");   
+        props.put("group.id", GROUP_NAME);   
         props.put("zookeeper.session.timeout.ms","10000");   
         return new ConsumerConfig(props);   
     }   
      
     public void run(){   
         Map<String,Integer> topickMap = new HashMap<String, Integer>();   
-        topickMap.put(topic, 1);   
+        topickMap.put(topic, 3);   
         Map<String, List<KafkaStream<byte[],byte[]>>>  streamMap =consumer.createMessageStreams(topickMap);   
         KafkaStream<byte[],byte[]>stream = streamMap.get(topic).get(0);   
         ConsumerIterator<byte[],byte[]> it =stream.iterator();   

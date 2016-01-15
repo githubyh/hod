@@ -9,7 +9,7 @@ import kafka.producer.ProducerConfig;
 public class MyProducer {
     private static final String TOPIC = "kafkatesttop";
     private static final String CONTENT = "This is a single message";
-    private static final String BROKER_LIST = "appserver:9092";
+    private static final String BROKER_LIST = "appserver:9092,appserver2:9092";
     private static final String SERIALIZER_CLASS = "kafka.serializer.StringEncoder";
     
     public static void main(String[] args) {

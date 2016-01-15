@@ -14,8 +14,8 @@ import kafka.message.MessageAndMetadata;
 public class MyConsumer {
     private static final String ZOOKEEPER = "appserver:2181";
     //groupName可以随意给，因为对于kafka里的每条消息，每个group都会完整的处理一遍
-    private static final String GROUP_NAME = "0";
-    private static final String TOPIC_NAME = "kafkatesttop";
+    private static final String GROUP_NAME = "testgroup";
+    private static final String TOPIC_NAME = "fktest1";
     private static final int CONSUMER_NUM = 1;
     private static final int PARTITION_NUM = 4;
  
@@ -39,7 +39,7 @@ public class MyConsumer {
         List<KafkaStream<byte[], byte[]>> streams = topicMessageStreams.get(TOPIC_NAME);
  
         // create list of 4 threads to consume from each of the partitions
-        ExecutorService executor = Executors.newFixedThreadPool(CONSUMER_NUM);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
  
         // consume the messages in the threads
         for (final KafkaStream<byte[], byte[]> stream : streams) {
