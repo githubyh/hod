@@ -2,21 +2,28 @@ package com.yh.hod.hod;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.yh.hod.flume.WriteLog;
+
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
  
 public class MyProducer {
-    private static final String TOPIC = "kafkatesttop";
+    private static final String TOPIC = "fktest1";
     private static final String CONTENT = "This is a single message";
     private static final String BROKER_LIST = "appserver:9092,appserver2:9092";
     private static final String SERIALIZER_CLASS = "kafka.serializer.StringEncoder";
+
+    protected static final Log logger = LogFactory.getLog(MyProducer.class); 
     
     public static void main(String[] args) {
         Properties props = new Properties();
         props.put("serializer.class", SERIALIZER_CLASS);
         props.put("metadata.broker.list", BROKER_LIST);
-        
         ProducerConfig config = new ProducerConfig(props);
         Producer<String, String> producer = new Producer<String, String>(config);
  
@@ -28,10 +35,12 @@ public class MyProducer {
         //Send multiple messages.
         List<KeyedMessage<String,String>> messages = 
             new ArrayList<KeyedMessage<String, String>>();
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 20005; i++) {
             messages.add(new KeyedMessage<String, String>
                 (TOPIC, "Multiple message at a time. " + i));
         }
+        
+        System.out.println("===========");
         producer.send(messages);
     }
 }
